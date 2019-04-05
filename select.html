@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vector Tile Selection</title>
+        <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <script type="text/javascript" src="js/ol.js"></script>
+        <script type="text/javascript" src="js/proj4.js"></script>
+
+    </head>
+    <body>
+        <div id="map" class="map"></div>
+        <form class="form-inline">
+            <label>Action type &nbsp;</label>
+            <select id="type" class="form-control">
+                <option value="singleselect" selected>Single Select</option>
+                <option value="multiselect">Multi Select</option>
+            </select>
+        </form>
+        <script>
+
+
+            // lookup for selection objects
+            var selection = {};
+            // feature property to act as identifier
+            var idProp = 'name';
+
+
+
+            var imageLayer = new ol.layer.Image({
+                source: new ol.source.ImageWMS({
+                    url: 'http://doedag.opengeogroep.nl/geoserver/wms',
+                    params: {
+                        'LAYERS': 'doedag:osm_new_admin',
+                        'FORMAT': 'image/png'
+                    },
+                    serverType: 'geoserver'
+                })
+            });
+
+            proj4.defs("EPSG:28992", "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m +no_defs ");
+            ol.proj.proj4.register(proj4);
+            var projection = ol.proj.get('EPSG:28992');
+
+            var resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105];
+            var extentAr = [-285401.0, 22598.0, 595401.0, 903401.0];
+            var maxExtent = [7700, 304000, 280000, 6200000];
+
+
+            //projection.setExtent(extentAr);
+
+
+            var vtLayer = new ol.layer.VectorTile({
+                declutter: true,
+                source: new ol.source.VectorTile({
+                    format: new ol.format.MVT(),
+                    tileGrid: new ol.tilegrid.TileGrid({
+                        extent: extentAr,
+                        resolutions: resolutions,
+                        tileSize: 256
+                    }),
+                    url: 'http://doedag.opengeogroep.nl/geoserver/gwc/service/tms/1.0.0/' +
+                            'doedag:osm_new_admin@nlgrid@pbf/{z}/{x}/{-y}.pbf',
+                }),
+                style: function (feature) {
+                    var selected = !!selection[feature.get(idProp)];
+                    return new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: selected ? 'rgba(200,20,20,0.8)' : 'gray',
+                            width: selected ? 2 : 1
+                        }),
+                        fill: new ol.style.Fill({
+                            color: selected ? 'rgba(200,20,20,0.2)' : 'rgba(20,20,20,0.9)'
+                        })
+                    });
+                }
+            });
+
+            var map = new ol.Map({
+                layers: [
+                    imageLayer,vtLayer
+                ],
+                target: 'map',
+                view: new ol.View({
+                    center: [100000, 300000],
+                    //zoom:2,
+                    resolution: 860,
+                    resolutions: resolutions,
+                    projection: projection,
+                    //extent:maxExtent
+                })
+            });
+
+            var selectElement = document.getElementById('type');
+
+            map.on('click', function (event) {
+                var features = map.getFeaturesAtPixel(event.pixel);
+                if (!features) {
+                    selection = {};
+                    // force redraw of layer style
+                    vtLayer.setStyle(vtLayer.getStyle());
+                    return;
+                }
+                var feature = features[0];
+                var fid = feature.get(idProp);
+
+                if (selectElement.value === 'singleselect') {
+                    selection = {};
+                }
+                // add selected feature to lookup
+                selection[fid] = feature;
+
+                // force redraw of layer style
+                vtLayer.setStyle(vtLayer.getStyle());
+            });
+        </script>
+    </body>
+</html>
