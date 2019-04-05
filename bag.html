@@ -32,7 +32,7 @@
 
             var imageLayer = new ol.layer.Image({
                 source: new ol.source.ImageWMS({
-					//http://openbasiskaart.nl/mapcache/?LAYERS=osm-nb&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fjpeg&SRS=EPSG%3A28992&BBOX=44899.52,573100.48,155000,683200.96&WIDTH=256&HEIGHT=256
+                    //http://openbasiskaart.nl/mapcache/?LAYERS=osm-nb&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fjpeg&SRS=EPSG%3A28992&BBOX=44899.52,573100.48,155000,683200.96&WIDTH=256&HEIGHT=256
                     //url: 'https://doedag.opengeogroep.nl/geoserver/wms',
                     url: 'http://openbasiskaart.nl/mapcache/?',
                     params: {
@@ -117,8 +117,15 @@
 
                 // force redraw of layer style
                 vtLayer.setStyle(vtLayer.getStyle());
+                var props = feature.getProperties();
                 
-                document.getElementById('beschrijving').value = feature.getProperties().documentnummer + ', status: ' +feature.getProperties().pandstatus;
+                var s=''
+                for (var key in props) {
+                    if (props.hasOwnProperty(key)) {
+                        s+= key +': '+ props[key] +'\n');
+                    }
+                }
+                document.getElementById('beschrijving').value = s;
                 
             });
         </script>
