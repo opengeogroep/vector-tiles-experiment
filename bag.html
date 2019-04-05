@@ -119,10 +119,10 @@
                 vtLayer.setStyle(vtLayer.getStyle());
                 var props = feature.getProperties();
                 
-                var s=''
+                var s = '';
                 for (var key in props) {
                     if (props.hasOwnProperty(key)) {
-                        s+= key +': '+ props[key] +'\n');
+                        s+= key + ': ' + props[key] + '\n';
                     }
                 }
                 document.getElementById('beschrijving').value = s;
