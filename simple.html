@@ -33,7 +33,7 @@ proj4.defs("EPSG:28992","+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888
           layers: [
             new ol.layer.Image({
               source: new ol.source.ImageWMS({
-                url: 'http://doedag.opengeogroep.nl/geoserver/wms',
+                url: 'https://doedag.opengeogroep.nl/geoserver/wms',
                 params: {
                   'LAYERS': 'doedag:osm_new_admin',
                   'FORMAT': 'image/png'
@@ -51,7 +51,7 @@ proj4.defs("EPSG:28992","+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888
                     tileSize: 256
               }),
                 projection:projection,
-                 url: 'http://doedag.opengeogroep.nl/geoserver/gwc/service/tms/1.0.0/doedag:osm_new_admin@nlgrid@pbf/{z}/{x}/{-y}.pbf'
+                 url: 'https://doedag.opengeogroep.nl/geoserver/gwc/service/tms/1.0.0/doedag:osm_new_admin@nlgrid@pbf/{z}/{x}/{-y}.pbf'
 
               }),
               style: new ol.style.Style({
