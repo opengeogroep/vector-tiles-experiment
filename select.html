@@ -47,7 +47,7 @@
             var maxExtent = [7700, 304000, 280000, 6200000];
 
 
-            //projection.setExtent(extentAr);
+            projection.setExtent(extentAr);
 
 
             var vtLayer = new ol.layer.VectorTile({
@@ -55,7 +55,7 @@
                 source: new ol.source.VectorTile({
                     format: new ol.format.MVT(),
                     tileGrid: new ol.tilegrid.TileGrid({
-                        extent: extentAr,
+                        extent: projection.getExtent(),
                         resolutions: resolutions,
                         tileSize: 256
                     }),
