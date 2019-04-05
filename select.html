@@ -29,7 +29,7 @@
 
             var imageLayer = new ol.layer.Image({
                 source: new ol.source.ImageWMS({
-                    url: 'http://doedag.opengeogroep.nl/geoserver/wms',
+                    url: 'https://doedag.opengeogroep.nl/geoserver/wms',
                     params: {
                         'LAYERS': 'doedag:osm_new_admin',
                         'FORMAT': 'image/png'
@@ -59,7 +59,7 @@
                         resolutions: resolutions,
                         tileSize: 256
                     }),
-                    url: 'http://doedag.opengeogroep.nl/geoserver/gwc/service/tms/1.0.0/' +
+                    url: 'https://doedag.opengeogroep.nl/geoserver/gwc/service/tms/1.0.0/' +
                             'doedag:osm_new_admin@nlgrid@pbf/{z}/{x}/{-y}.pbf',
                 }),
                 style: function (feature) {
