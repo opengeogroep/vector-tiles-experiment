@@ -59,8 +59,7 @@
                         resolutions: resolutions,
                         tileSize: 256
                     }),
-                    url: 'https://doedag.opengeogroep.nl/geoserver/gwc/service/tms/1.0.0/' +
-                            'doedag:osm_new_admin@nlgrid@pbf/{z}/{x}/{-y}.pbf',
+                    url: 'http://doedag.opengeogroep.nl/mapcache-latest/tms/1.0.0/osm-mvt@rd/{z}/{x}/{-y}.mvt'
                 }),
                 style: function (feature) {
                     var selected = !!selection[feature.get(idProp)];
@@ -78,7 +77,7 @@
 
             var map = new ol.Map({
                 layers: [
-                    imageLayer,vtLayer
+                    vtLayer
                 ],
                 target: 'map',
                 view: new ol.View({
