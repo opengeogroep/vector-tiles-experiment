@@ -18,7 +18,7 @@
             </select>
         </form>
         
-        <textarea id="beschrijving" name="beschrijving" rows="4"></textarea>
+        <textarea id="beschrijving" name="beschrijving" rows="10" cols="80"></textarea>
         
         <script>
 
@@ -32,11 +32,8 @@
 
             var imageLayer = new ol.layer.Image({
                 source: new ol.source.ImageWMS({
-                    //http://openbasiskaart.nl/mapcache/?LAYERS=osm-nb&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fjpeg&SRS=EPSG%3A28992&BBOX=44899.52,573100.48,155000,683200.96&WIDTH=256&HEIGHT=256
-                    //url: 'https://doedag.opengeogroep.nl/geoserver/wms',
                     url: 'http://openbasiskaart.nl/mapcache/?',
                     params: {
-                        //'LAYERS': 'doedag:osm_new_admin',
                         'LAYERS':'osm-nb',
                         'FORMAT': 'image/png'
                     },
