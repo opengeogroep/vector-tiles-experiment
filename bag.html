@@ -118,7 +118,7 @@
                 // force redraw of layer style
                 vtLayer.setStyle(vtLayer.getStyle());
                 
-                document.getElementById('beschrijving').value = feature.properties.documentnummer + ' ' +feature.properties.pandstatus;
+                document.getElementById('beschrijving').value = feature.getProperties().documentnummer + ', status: ' +feature.getProperties().pandstatus;
                 
             });
         </script>
