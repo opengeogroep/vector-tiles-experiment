@@ -18,6 +18,7 @@
             </select>
         </form>
         
+        <textarea id="beschrijving" name="beschrijving" rows="4"></textarea>
         
         <script>
 
@@ -117,6 +118,7 @@
                 // force redraw of layer style
                 vtLayer.setStyle(vtLayer.getStyle());
                 
+                document.getElementById('beschrijving').value = feature.properties.documentnummer + ' ' +feature.properties.pandstatus;
                 
             });
         </script>
